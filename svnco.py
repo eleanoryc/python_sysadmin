@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+# this script will prompt user for password.
+# it will do a svn checkout
+# every 10 secs, it will run svn up until the svn up error out, and exit
+
 import sys
 import subprocess_2_7
 import getpass
@@ -7,7 +11,6 @@ import os
 import time
 import pwd
 
-#input_user = raw_input('Username:')
 input_passwd = getpass.getpass('Password:')
 
 USERID = pwd.getpwuid( os.getuid() ).pw_name
@@ -15,15 +18,14 @@ USERID = pwd.getpwuid( os.getuid() ).pw_name
 SVN_CO_CMD = "svn --username " + USERID + " --password " + input_passwd + " co https://vc-commit.ops.sfdc.net/subversion/tools/imtncc"
 SVN_UP_CMD = "svn --username " + USERID + " --password " + input_passwd + " up imtncc/"
 
-#print SVN_CO_CMD 
+svnco_output = subprocess_2_7.check_output(SVN_CO_CMD,shell=True)
+print(os.getcwd())
 
 def main():
 
     while True:
 
         try:
-            svnco_output = subprocess_2_7.check_output(SVN_CO_CMD,shell=True)
-            print(os.getcwd())
             svnup_output = subprocess_2_7.check_output(SVN_UP_CMD,shell=True)
             print svnup_output
             time.sleep(10)
