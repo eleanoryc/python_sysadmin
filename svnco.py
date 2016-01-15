@@ -11,6 +11,18 @@ import os
 import time
 import pwd
 
+
+def get_passwd():
+    """Prompt for password with confirmation."""
+    match = False
+    while not match:
+        password1 = getpass.getpass("Password: ")
+        password2 = getpass.getpass("Confirm Password: ")
+        match = password1 == password2
+        if not match:
+            sys.stderr.write("ERROR: passwords do not match.\n")
+    return password1
+
 input_passwd = getpass.getpass('Password:')
 
 USERID = pwd.getpwuid( os.getuid() ).pw_name
