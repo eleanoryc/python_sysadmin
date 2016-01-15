@@ -23,18 +23,17 @@ def get_passwd():
             sys.stderr.write("ERROR: passwords do not match.\n")
     return password1
 
-input_passwd = getpass.getpass('Password:')
-
 USERID = pwd.getpwuid( os.getuid() ).pw_name
+input_passwd = get_passwd()
 
 SVN_CO_CMD = "svn --username " + USERID + " --password " + input_passwd + " co https://vc-commit.ops.sfdc.net/subversion/tools/imtncc"
 SVN_UP_CMD = "svn --username " + USERID + " --password " + input_passwd + " up imtncc/"
 
-svnco_output = subprocess_2_7.check_output(SVN_CO_CMD,shell=True)
-print(os.getcwd())
 
 def main():
 
+    svnco_output = subprocess_2_7.check_output(SVN_CO_CMD,shell=True)
+    print(os.getcwd())
     while True:
 
         try:
